@@ -16,16 +16,39 @@ namespace MSBuildWorkspaceTester.Services
         public WorkspaceService(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
+            /*
             var properties = new Dictionary<string, string>
             {
                 // This property ensures that XAML files will be compiled in the current AppDomain
                 // rather than a separate one. Any tasks isolated in AppDomains or tasks that create
                 // AppDomains will likely not work due to https://github.com/Microsoft/MSBuildLocator/issues/16.
-                { "AlwaysCompileMarkupFilesInSeparateDomain", bool.FalseString }
+                //{ "AlwaysCompileMarkupFilesInSeparateDomain", bool.FalseString },
+                { "DesignTimeBuild", bool.TrueString },
+                //{ "BuildProjectReferences", bool.TrueString },
+                //{ "SkipCompilerExecution", bool.FalseString },
+                //{ "ProvideCommandLineArgs ", bool.TrueString }
+            };
+            */
+            
+            // Set global properties
+            var globalProperties = new Dictionary<string, string>
+            {
+                //{ MSBuildProperties.SolutionDir, solutionDir },
+                //{ MSBuildProperties.MSBuildExtensionsPath, _dotnetSdkPaths.ExtensionsPath },
+                //{ MSBuildProperties.MSBuildSDKsPath, _dotnetSdkPaths.SdksPath },
+                //{ MSBuildProperties.RoslynTargetsPath, _dotnetSdkPaths.RoslynTargetsPath },
+                { MSBuildProperties.DesignTimeBuild, bool.TrueString },
+                //{ MSBuildProperties.BuildProjectReferences, "false" },
+                //{ MSBuildProperties.SkipCompilerExecution, "true" },
+                //{ MSBuildProperties.ProvideCommandLineArgs, "true" },
+                // Workaround for a problem with resource files, see https://github.com/dotnet/sdk/issues/346#issuecomment-257654120
+                { MSBuildProperties.GenerateResourceMSBuildArchitecture, "CurrentArchitecture" }
             };
 
-            Workspace = MSBuildWorkspace.Create(properties);
+            Workspace = MSBuildWorkspace.Create(globalProperties);
             Workspace.WorkspaceFailed += WorkspaceFailed;
+
+            //Workspace.LoadMetadataForReferencedProjects = true;
         }
 
         private void WorkspaceFailed(object sender, WorkspaceDiagnosticEventArgs e)

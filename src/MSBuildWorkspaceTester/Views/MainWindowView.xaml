@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Name="MainWindow"
         Title="MSBuildWorkspace Tester" Height="768" Width="1024"
-        FontSize="15"
+        FontSize="12"
         f:ViewModel.RegisterCommands="{Binding}">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,7 +19,7 @@
         <ToolBarTray Grid.Row="0" ToolBarTray.IsLocked="True">
             <ToolBar>
                 <Button Command="{Binding OpenProjectCommand}" ToolTip="Open project or solution">
-                    <Image Source="{StaticResource OpenFolderIcon}" />
+                    <Image Source="{StaticResource OpenFolderIcon}" Height="48" MinHeight="24" MaxHeight="48"/>
                 </Button>
             </ToolBar>
         </ToolBarTray>
@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TreeView Grid.Column="0" ItemsSource="{Binding Solution}">
+            <TreeView Grid.Column="0" FontSize="11" ItemsSource="{Binding Solution}">
                 <TreeView.Resources>
 
                     <HierarchicalDataTemplate DataType="{x:Type vm:SolutionViewModel}"
